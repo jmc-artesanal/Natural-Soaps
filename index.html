@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JMC · Jabones Naturales Artesanales</title>
+  <meta name="description" content="JMC: jabones artesanales de Sabanagrande para el cuidado de tu piel.">
+
+  <!-- Tipografías: Cormorant Garamond (títulos) + Nunito (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- =====================================================
+       SPRITE DE ICONOS Y DECORACIONES (SVG reutilizables)
+       No se muestra; se usa con <use href="#nombre">
+       ===================================================== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Hoja -->
+      <symbol id="leaf" viewBox="0 0 24 24">
+        <path d="M12 2C6 6.5 4 12.5 12 22c8-9.5 6-15.5 0-20z" fill="currentColor"/>
+        <path d="M12 6v14" stroke="#fff" stroke-opacity=".55" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </symbol>
+
+      <!-- Flor de manzanilla -->
+      <symbol id="flower" viewBox="0 0 100 100">
+        <g fill="#fffdf8" stroke="#e8dcc6" stroke-width="1.2">
+          <ellipse cx="50" cy="22" rx="9" ry="19"/>
+          <ellipse cx="50" cy="22" rx="9" ry="19" transform="rotate(45 50 50)"/>
+          <ellipse cx="50" cy="22" rx="9" ry="19" transform="rotate(90 50 50)"/>
+          <ellipse cx="50" cy="22" rx="9" ry="19" transform="rotate(135 50 50)"/>
+          <ellipse cx="50" cy="22" rx="9" ry="19" transform="rotate(180 50 50)"/>
+          <ellipse cx="50" cy="22" rx="9" ry="19" transform="rotate(225 50 50)"/>
+          <ellipse cx="50" cy="22" rx="9" ry="19" transform="rotate(270 50 50)"/>
+          <ellipse cx="50" cy="22" rx="9" ry="19" transform="rotate(315 50 50)"/>
+        </g>
+        <circle cx="50" cy="50" r="11" fill="#f0c987"/>
+        <circle cx="50" cy="50" r="11" fill="none" stroke="#dcae62" stroke-width="1.5"/>
+      </symbol>
+
+      <!-- Icono WhatsApp -->
+      <symbol id="i-whatsapp" viewBox="0 0 24 24">
+        <path d="M3 21l1.6-4.8A9 9 0 1 1 8 19.4L3 21z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M9 8.3c0 3.6 3.1 6.7 6.7 6.7l1.1-1.6-2.1-1.1-1 .9c-1.1-.4-2.1-1.4-2.5-2.5l.9-1-1.1-2.1L9 8.3z" fill="currentColor"/>
+      </symbol>
+
+      <!-- Icono Instagram -->
+      <symbol id="i-instagram" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/>
+      </symbol>
+
+      <!-- Icono TikTok -->
+      <symbol id="i-tiktok" viewBox="0 0 24 24">
+        <path d="M14.5 3v11.2a4 4 0 1 1-4-4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M14.5 3c.4 2.7 2.2 4.4 5 4.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- =====================================================
+       1. PORTADA CON LOGO
+       Se desvanece al bajar y reaparece al subir (script.js)
+       ===================================================== -->
+  <section class="hero" id="inicio" aria-label="Bienvenida">
+    <div class="hero__inner" id="heroInner">
+
+      <!-- Decoraciones -->
+      <svg class="deco deco--leaf deco--l1" aria-hidden="true"><use href="#leaf"/></svg>
+      <svg class="deco deco--leaf deco--l2" aria-hidden="true"><use href="#leaf"/></svg>
+      <svg class="deco deco--leaf deco--l3" aria-hidden="true"><use href="#leaf"/></svg>
+      <svg class="deco deco--flower deco--f1" aria-hidden="true"><use href="#flower"/></svg>
+      <svg class="deco deco--flower deco--f2" aria-hidden="true"><use href="#flower"/></svg>
+      <svg class="deco deco--flower deco--f3" aria-hidden="true"><use href="#flower"/></svg>
+
+      <!-- Logo (la ruta se configura en script.js) -->
+      <div class="logo-frame">
+        <img id="logoImg" class="logo-frame__img" src="images/logo.png" alt="Logo de JMC Jabones">
+        <!-- Se muestra solo si todavía no existe images/logo.png -->
+        <div id="logoFallback" class="logo-frame__fallback" hidden>
+          <span>Aquí va tu logo</span>
+          <small>images/logo.png</small>
+        </div>
+      </div>
+
+      <!-- Estas frases se editan en CONFIG (script.js) -->
+      <p class="hero__tagline" id="heroTagline">Jabones artesanales hechos a mano</p>
+
+      <a class="hero__hint" href="#catalogo" aria-label="Ir al catálogo">
+        <span id="heroHint">Descubre nuestros jabones</span>
+        <span class="hero__arrow" aria-hidden="true">⌄</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       2. CATÁLOGO + MISIÓN Y VISIÓN
+       (aparece gradualmente al bajar)
+       ===================================================== -->
+  <main class="catalog-wrap" id="catalogWrap">
+
+    <section class="catalog" id="catalogo" aria-labelledby="catalogTitle">
+      <header class="section-head">
+        <svg class="section-head__ornament" aria-hidden="true"><use href="#flower"/></svg>
+        <h2 id="catalogTitle">Nuestros jabones</h2>
+        <p>Elaborados con ingredientes naturales, con cariño y paciencia.</p>
+        <div class="divider" aria-hidden="true">
+          <span></span>
+          <svg><use href="#leaf"/></svg>
+          <span></span>
+        </div>
+      </header>
+
+      <!-- Las 4 tarjetas se generan desde script.js (CONFIG.products) -->
+      <div class="grid" id="productGrid"></div>
+    </section>
+
+    <!-- Misión y Visión: aparecen debajo de los productos.
+         El texto se edita en CONFIG (script.js) -->
+    <section class="about" id="nosotros" aria-label="Misión y visión">
+      <article class="about__card reveal">
+        <svg class="about__icon" aria-hidden="true"><use href="#leaf"/></svg>
+        <h2>Misión</h2>
+        <p id="missionText"></p>
+      </article>
+
+      <article class="about__card reveal" style="--delay: .15s">
+        <svg class="about__icon about__icon--flower" aria-hidden="true"><use href="#flower"/></svg>
+        <h2>Visión</h2>
+        <p id="visionText"></p>
+      </article>
+    </section>
+  </main>
+
+  <!-- =====================================================
+       3. CONTACTO Y REDES SOCIALES
+       ===================================================== -->
+  <footer class="contact" id="contacto" aria-labelledby="contactTitle">
+    <svg class="deco deco--leaf deco--c1" aria-hidden="true"><use href="#leaf"/></svg>
+    <svg class="deco deco--flower deco--c2" aria-hidden="true"><use href="#flower"/></svg>
+    <svg class="deco deco--leaf deco--c3" aria-hidden="true"><use href="#leaf"/></svg>
+
+    <div class="contact__inner reveal">
+      <h2 id="contactTitle">Hablemos</h2>
+      <p class="contact__lead">Escríbenos o síguenos para conocer nuestras novedades.</p>
+
+      <!-- Los enlaces se generan desde script.js (CONFIG.social) -->
+      <ul class="social" id="socialList"></ul>
+
+      <p class="contact__quote" id="closingPhrase"></p>
+
+      <p class="contact__copy">© <span id="year"></span> JMC · Jabones Artesanales</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

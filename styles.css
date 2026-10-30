@@ -1,0 +1,514 @@
+/* =========================================================
+   JMC · Jabones Artesanales
+   styles.css
+   ---------------------------------------------------------
+   Índice:
+   1. Variables (colores, tipografías)
+   2. Base
+   3. Decoraciones
+   4. Portada con logo
+   5. Catálogo (4 jabones)
+   6. Tarjetas de producto (incluye botón de WhatsApp)
+   7. Misión y Visión
+   8. Contacto y redes
+   9. Animaciones de aparición
+   10. Reducción de movimiento
+   11. Ajustes para tableta y celular
+   ========================================================= */
+
+/* ---------- 1. VARIABLES ---------- */
+:root {
+  --cream:        #f7f0e3;   /* crema principal */
+  --beige:        #ecdfc8;   /* beige */
+  --beige-deep:   #dccaa8;
+  --warm-white:   #fffcf6;   /* blanco cálido */
+  --green:        #b7cfae;   /* verde pastel */
+  --green-deep:   #7f9f76;   /* verde para textos/detalles */
+  --terracotta:   #d99a86;   /* terracota suave */
+  --terracotta-d: #c47f69;
+  --ink:          #5b4d41;   /* texto principal */
+  --ink-soft:     #8a7a6a;
+
+  --radius-lg: 32px;
+  --radius-md: 22px;
+  --shadow-soft: 0 10px 30px rgba(120, 95, 60, .12);
+  --shadow-hover: 0 18px 40px rgba(120, 95, 60, .20);
+
+  --font-title: "Cormorant Garamond", Georgia, serif;
+  --font-body:  "Nunito", system-ui, sans-serif;
+}
+
+/* ---------- 2. BASE ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(183, 207, 174, .22), transparent 45%),
+    radial-gradient(circle at 85% 30%, rgba(217, 154, 134, .14), transparent 40%),
+    var(--cream);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+h1, h2, h3 { font-family: var(--font-title); font-weight: 600; margin: 0; }
+
+/* ---------- 3. DECORACIONES (hojas y manzanilla) ---------- */
+.deco {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+.deco--leaf   { color: var(--green); opacity: .75; width: 70px; height: 70px; }
+.deco--flower { width: 90px; height: 90px; opacity: .95; filter: drop-shadow(0 4px 6px rgba(120, 95, 60, .12)); }
+
+/* ---------- 4. PORTADA ---------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+/* Este contenedor es el que cambia su opacidad al hacer scroll */
+.hero__inner {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: center;
+  will-change: opacity, transform;
+}
+
+/* Posiciones de las decoraciones de la portada */
+.deco--l1 { top: 4%;   left: 3%;  transform: rotate(-35deg); width: 90px; height: 90px; }
+.deco--l2 { bottom: 12%; right: 2%; transform: rotate(40deg) scaleX(-1); width: 100px; height: 100px; }
+.deco--l3 { top: 40%;  right: 8%; transform: rotate(15deg); width: 54px; height: 54px; opacity: .55; }
+.deco--f1 { top: 10%;  right: 10%; width: 100px; height: 100px; transform: rotate(12deg); }
+.deco--f2 { bottom: 16%; left: 6%;  width: 80px;  height: 80px;  transform: rotate(-20deg); }
+.deco--f3 { top: 48%; left: 2%; width: 50px; height: 50px; opacity: .8; }
+
+/* Marco del logo (para hacerlo más grande, sube el segundo valor de min()) */
+.logo-frame {
+  position: relative;
+  width: min(82vw, 520px);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--warm-white) 55%, rgba(255, 252, 246, .4) 100%);
+  box-shadow: var(--shadow-soft), inset 0 0 0 10px rgba(236, 223, 200, .55);
+  padding: clamp(1.5rem, 6vw, 3rem);
+}
+.logo-frame::after {               /* anillo decorativo exterior */
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  border: 2px dashed var(--green);
+  opacity: .7;
+  pointer-events: none;
+}
+.logo-frame__img { width: 100%; height: 100%; object-fit: contain; }
+.logo-frame__fallback {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--ink-soft);
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+}
+.logo-frame__fallback[hidden] { display: none; }
+.logo-frame__fallback small { font-family: var(--font-body); font-size: .8rem; margin-top: .3rem; }
+
+.hero__tagline {
+  font-family: var(--font-title);
+  font-style: italic;
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  color: var(--green-deep);
+  margin: 0;
+}
+
+.hero__hint {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--terracotta-d);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .95rem;
+  letter-spacing: .04em;
+}
+.hero__arrow {
+  font-size: 1.8rem;
+  line-height: 1;
+  animation: bounce 2.2s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(8px); }
+}
+
+/* ---------- 5. CATÁLOGO ---------- */
+/* La opacidad de este contenedor la controla script.js al hacer scroll */
+.catalog-wrap {
+  opacity: 0;
+  will-change: opacity;
+}
+
+.catalog {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1.25rem 4rem;
+  scroll-margin-top: 0;
+}
+
+.section-head { text-align: center; margin-bottom: 3.2rem; }
+.section-head__ornament { width: 54px; height: 54px; margin: 0 auto .4rem; display: block; }
+.section-head h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); color: var(--ink); }
+.section-head p { color: var(--ink-soft); margin: .6rem 0 0; }
+
+.divider {
+  display: flex; align-items: center; justify-content: center;
+  gap: .8rem; margin-top: 1.2rem;
+}
+.divider span { width: 70px; height: 2px; background: linear-gradient(90deg, transparent, var(--beige-deep), transparent); }
+.divider svg { width: 22px; height: 22px; color: var(--green); }
+
+/* Cuadrícula de 4 jabones: 4 columnas en PC, 2 en tableta, 1 en celular */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+}
+@media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; } }
+@media (max-width: 600px) { .grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; } }
+
+/* ---------- 6. TARJETAS DE PRODUCTO ---------- */
+.card {
+  position: relative;
+  background: var(--warm-white);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1rem 1.6rem;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(220, 202, 168, .5);
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+
+/* Imagen con forma de arco */
+.card__media {
+  position: relative;
+  aspect-ratio: 1 / 1.05;
+  border-radius: 999px 999px var(--radius-md) var(--radius-md);
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--beige), var(--green) 140%);
+}
+.card__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+.card:hover .card__img { transform: scale(1.06); }
+
+/* Espacio reservado (se ve si la imagen aún no existe) */
+.card__placeholder {
+  position: absolute; inset: 0;
+  display: grid; place-content: center; justify-items: center;
+  gap: .3rem;
+  color: var(--ink-soft);
+  font-size: .85rem;
+  padding: 1rem;
+}
+.card__placeholder svg { width: 46px; height: 46px; color: var(--green-deep); opacity: .8; }
+.card__placeholder code {
+  background: rgba(255, 252, 246, .8);
+  padding: .1rem .5rem; border-radius: 999px; font-size: .78rem;
+}
+
+.card__badge {                     /* pequeña flor decorativa en la esquina */
+  position: absolute; top: -14px; right: -10px;
+  width: 52px; height: 52px;
+  filter: drop-shadow(0 4px 6px rgba(120, 95, 60, .18));
+  transition: transform .5s ease;
+  pointer-events: none;
+}
+.card:hover .card__badge { transform: rotate(40deg) scale(1.1); }
+
+.card__name { font-size: 1.5rem; margin-top: 1.1rem; color: var(--ink); line-height: 1.2; }
+.card__price {
+  display: inline-block;
+  margin-top: .5rem;
+  padding: .25rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(217, 154, 134, .18);
+  color: var(--terracotta-d);
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+/* Botón "Pedir por WhatsApp" */
+.card__order {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  width: fit-content;
+  margin: 1.1rem auto 0;
+  padding: .55rem 1.1rem;
+  border-radius: 999px;
+  background: var(--green-deep);
+  color: var(--warm-white);
+  font-weight: 700;
+  font-size: .9rem;
+  text-decoration: none;
+  transition: background .3s ease, transform .3s ease;
+}
+.card__order svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* Hace que TODA la tarjeta sea clicable, no solo el botón */
+.card__order::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+}
+
+.card:hover .card__order,
+.card__order:focus-visible {
+  background: var(--terracotta-d);
+}
+.card__order:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+}
+
+/* ---------- 7. MISIÓN Y VISIÓN ---------- */
+.about {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.25rem 5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.8rem;
+}
+.about__card {
+  position: relative;
+  background: var(--warm-white);
+  border-radius: var(--radius-lg);
+  padding: 2.4rem 2rem 2.2rem;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(220, 202, 168, .5);
+}
+.about__icon {
+  width: 38px; height: 38px;
+  margin: 0 auto .6rem;
+  display: block;
+  color: var(--green);
+}
+.about__icon--flower { width: 46px; height: 46px; }
+.about__card h2 {
+  font-size: clamp(1.8rem, 4vw, 2.3rem);
+  color: var(--terracotta-d);
+  margin-bottom: .7rem;
+}
+.about__card p {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.75;
+}
+
+/* ---------- 8. CONTACTO Y REDES ---------- */
+.contact {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 1.25rem 3rem;
+  text-align: center;
+  background: linear-gradient(180deg, transparent, var(--beige) 40%);
+  border-radius: 60px 60px 0 0;
+}
+.deco--c1 { top: 8%;  left: 5%;  transform: rotate(-30deg); width: 80px; height: 80px; }
+.deco--c2 { top: 12%; right: 7%; transform: rotate(15deg);  width: 80px; height: 80px; }
+.deco--c3 { bottom: 14%; right: 12%; transform: rotate(35deg) scaleX(-1); width: 64px; height: 64px; }
+
+.contact__inner { position: relative; max-width: 700px; margin: 0 auto; }
+.contact h2 { font-size: clamp(2rem, 5vw, 3rem); }
+.contact__lead { color: var(--ink-soft); margin: .6rem 0 2rem; }
+
+.social {
+  list-style: none; margin: 0 0 2.2rem; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem;
+}
+.social__link {
+  display: flex; align-items: center; gap: .8rem;
+  padding: .7rem 1.4rem .7rem .8rem;
+  border-radius: 999px;
+  background: var(--warm-white);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: var(--shadow-soft);
+  transition: transform .3s ease, box-shadow .3s ease, background .3s ease, color .3s ease;
+}
+.social__icon {
+  width: 46px; height: 46px; padding: 11px;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--warm-white);
+  transition: background .3s ease, transform .4s ease;
+}
+.social__icon svg { width: 100%; height: 100%; display: block; }
+.social__link:hover,
+.social__link:focus-visible {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  background: var(--terracotta);
+  color: var(--warm-white);
+  outline: none;
+}
+.social__link:hover .social__icon,
+.social__link:focus-visible .social__icon {
+  background: rgba(255, 252, 246, .28);
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.contact__quote {
+  font-family: var(--font-title);
+  font-style: italic;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  color: var(--green-deep);
+  max-width: 560px;
+  margin: 0 auto 2rem;
+}
+.contact__copy { font-size: .85rem; color: var(--ink-soft); margin: 0; }
+
+/* ---------- 9. ANIMACIÓN DE APARICIÓN ---------- */
+/* Las tarjetas y bloques empiezan ocultos y suben suavemente al entrar en pantalla */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .8s ease, transform .8s ease;
+  transition-delay: var(--delay, 0s);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Las tarjetas responden rápido al hover una vez visibles */
+.card.reveal.is-visible {
+  transition: opacity .8s ease, transform .35s ease, box-shadow .35s ease;
+}
+
+/* Si JavaScript no carga, todo sigue siendo visible */
+.no-js .reveal, .no-js .catalog-wrap { opacity: 1; transform: none; }
+
+/* ---------- 10. REDUCIR MOVIMIENTO ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero__arrow { animation: none; }
+  .reveal { transform: none; transition: opacity .3s ease; }
+  .card, .card__img, .card__badge, .social__link, .social__icon, .card__order { transition: none; }
+  .card:hover, .social__link:hover { transform: none; }
+  .card:hover .card__img { transform: none; }
+  .card:hover .card__badge { transform: none; }
+}
+
+/* ---------- 11. AJUSTES PARA TABLETA Y CELULAR ---------- */
+
+/* Tabletas (601 px a 980 px) */
+@media (min-width: 601px) and (max-width: 980px) {
+  .logo-frame { width: min(70vw, 460px); }
+  .deco--l1, .deco--f1 { width: 70px; height: 70px; }
+  .deco--l2, .deco--f2 { width: 64px; height: 64px; }
+  .card__name { font-size: 1.6rem; }
+}
+
+/* Celulares (hasta 760 px): Misión y Visión una debajo de la otra */
+@media (max-width: 760px) {
+  .about { grid-template-columns: 1fr; max-width: 520px; padding-bottom: 4rem; }
+  .about__card { padding: 2rem 1.4rem; }
+}
+
+/* Celulares (hasta 600 px) */
+@media (max-width: 600px) {
+
+  /* Portada */
+  .hero { padding: 1.5rem .75rem; }
+  .hero__inner { min-height: 70vh; gap: 1.1rem; }
+
+  /* Decoraciones más pequeñas para no tapar el logo */
+  .deco--l1 { width: 46px; height: 46px; top: 2%;  left: 0; }
+  .deco--l2 { width: 52px; height: 52px; bottom: 6%; right: 0; }
+  .deco--l3 { display: none; }
+  .deco--f1 { width: 56px; height: 56px; top: 3%; right: 2%; }
+  .deco--f2 { width: 48px; height: 48px; bottom: 8%; left: 2%; }
+  .deco--f3 { display: none; }
+
+  /* Logo */
+  .logo-frame {
+    width: 78vw;
+    padding: 1.3rem;
+    box-shadow: var(--shadow-soft), inset 0 0 0 6px rgba(236, 223, 200, .55);
+  }
+  .logo-frame::after { inset: -8px; }
+
+  .hero__tagline { font-size: 1.35rem; padding: 0 1rem; }
+  .hero__hint { font-size: .85rem; }
+
+  /* Catálogo */
+  .catalog { padding: 3rem 1rem 3rem; }
+  .section-head { margin-bottom: 2.2rem; }
+  .section-head__ornament { width: 44px; height: 44px; }
+  .section-head p { font-size: .95rem; padding: 0 .5rem; }
+  .grid { gap: 1.6rem; }
+
+  /* Tarjetas */
+  .card { padding: .8rem .8rem 1.4rem; }
+  .card__badge { width: 44px; height: 44px; top: -10px; right: -6px; }
+  .card__name { font-size: 1.5rem; margin-top: .9rem; }
+  .card__order { width: 100%; max-width: 260px; font-size: .92rem; }
+
+  /* Contacto y redes */
+  .contact {
+    padding: 3.5rem 1rem 2.5rem;
+    border-radius: 36px 36px 0 0;
+  }
+  .deco--c1 { width: 48px; height: 48px; top: 4%; left: 3%; }
+  .deco--c2 { width: 52px; height: 52px; top: 5%; right: 3%; }
+  .deco--c3 { display: none; }
+
+  .social { flex-direction: column; align-items: center; gap: .9rem; }
+  .social li { width: 100%; max-width: 300px; }
+  .social__link { width: 100%; }
+}
+
+/* Pantallas táctiles: sin efectos de "hover" pegados */
+@media (hover: none) {
+  .card:hover { transform: none; box-shadow: var(--shadow-soft); }
+  .card:hover .card__img { transform: none; }
+  .card:hover .card__badge { transform: none; }
+  .card:hover .card__order { background: var(--green-deep); }
+  .social__link:hover {
+    transform: none;
+    background: var(--warm-white);
+    color: var(--ink);
+    box-shadow: var(--shadow-soft);
+  }
+  .social__link:hover .social__icon {
+    background: var(--green);
+    transform: none;
+  }
+}
