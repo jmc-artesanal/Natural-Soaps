@@ -44,10 +44,9 @@ const CONFIG = {
      Cuidado: mantén las comillas y la coma al final de cada línea
      (menos en la última). */
   products: [
-    { name: "Jabón de Manzanilla", price: "$9.000", image: "images/jabon-1.jpg" },
-    { name: "Jabón de Avena", price: "$9.000", image: "images/jabon-2.jpg" },
-    { name: "Jabón de Romero", price: "$9.000", image: "images/jabon-3.jpg" },
-    { name: "Jabón de Coco", price: "$9.000", image: "images/jabon-4.jpg" }
+    { name: "Jabón de Manzanilla", price: "$8.000", image: "images/jabon-1.jpg" },
+    { name: "Jabón de Avena", price: "$8.000", image: "images/jabon-2.jpg" },
+    { name: "Jabón de Nacar", price: "$8.000", image: "images/jabon-3.jpg" },
   ],
 
   /* Redes sociales. WhatsApp usa automáticamente el número de arriba. */
